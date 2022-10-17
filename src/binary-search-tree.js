@@ -6,19 +6,36 @@ const { Node } = require("../extensions/list-tree.js");
  * Implement simple binary search tree according to task description
  * using Node from extensions
  */
-class BinarySearchTree {
+ class BinarySearchTree {
+  constructor(){
+    this.rootNode = null;
+  }
+
   root() {
-    return null;
+    return this.rootNode;
   }
 
   add(data) {
-    if (this.root === null) {
-      return new Node(data);
-    } else {
-      if (data < this.root.data) {
-        this.root.left = new Node(data);
+    if (!this.root) {
+      this.root = new Node(data);
+      return;
+    }
+
+    let currentNode = this.root;
+
+    while (currentNode) {
+      if (data > currentNode.data) {
+        if (!currentNode.right) {
+          currentNode.right = new Node(data);
+          return;
+        }
+        currentNode = currentNode.right;
       } else {
-        this.root.right = new Node(data);
+        if (!currentNode.left) {
+          currentNode.left = new Node(data);
+          return;
+        }
+        currentNode = currentNode.left;
       }
     }
   }
